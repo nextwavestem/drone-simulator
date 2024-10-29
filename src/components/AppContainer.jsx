@@ -1,22 +1,12 @@
 import '../css/appContainer.css'
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-
+import {getBannerReference} from '../config/navigationConfig.js'
 
 export const AppContainer = ({ children }) => {
-    const getBannerReference = () => {
-        if (window.location.hostname.includes('localhost')) {
-          return '/assets/fixtures/nws_banner.png';
-        }
-      
-        return '/drone-simulator/assets/fixtures/nws_banner.png';
-      };
+    const navigate = useNavigate();
 
-      const navigate = useNavigate();
-
-      const handleLogoClick = () => {
-          navigate('/');
-      };
+    const handleLogoClick = () => { navigate('/'); };
     
     return (
         <div className="application-container"> 

@@ -130,7 +130,7 @@ const displayDistanceText = (text, position) => {
 
 
 const CityModel = () => {
-  const { scene } = useGLTF('public/assets/models/city/city/city.glb'); // Load the GLB model
+  const { scene } = useGLTF('assets/models/city/city/city.glb'); // Load the GLB model
   const modelPosition = [-10, 0, -1]; // Set your desired position (x, y, z)
   return <primitive object={scene} position={modelPosition} />;
 };
