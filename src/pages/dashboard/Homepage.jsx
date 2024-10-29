@@ -5,6 +5,8 @@ import Cookies from 'js-cookie'; // Import js-cookie for session management
 import ActionButton from '../../components/ActionButton.jsx';
 import { getImagePrefix, projects } from './config.js';
 import './HomePage.css';
+import { validCredentials } from '../../config/validCredentials.js'
+import LoginForm from './LoginForm.jsx'; // Import the new LoginForm component
 
 const HomePage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -12,11 +14,10 @@ const HomePage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loginFields, setLoginFields] = useState({
-    field1: '',
-    field2: '',
-    field3: '',
-    field4: '',
-    field5: ''
+    schoolName: '',
+    accessCode: '',
+    instructorName: '',
+    gradeLevel: ''
   });
 
   const navigate = useNavigate();
@@ -44,11 +45,15 @@ const HomePage = () => {
   };
 
   const validateLogin = () => {
-    const validStrings = ['a', 'a', 'a', 'a', 'a'];
-    const isValid = Object.values(loginFields).every((value, index) => value === validStrings[index]);
+    const isValid = validCredentials.some(combination =>
+      combination.schoolName === loginFields.schoolName &&
+      combination.accessCode === loginFields.accessCode &&
+      combination.instructorName === loginFields.instructorName &&
+      combination.gradeLevel === loginFields.gradeLevel
+    );
 
     if (isValid) {
-      Cookies.set('session_active', 'true', { expires: 1 }); // Set session cookie
+      Cookies.set('session_active', 'true', { expires: 1 });
       setIsAuthenticated(true);
       setLoginModalOpen(false);
     } else {
@@ -60,33 +65,19 @@ const HomePage = () => {
     if (course) navigate(course.link);
   };
 
-  if (!isAuthenticated) {
-    return (
-      <Modal isOpen={loginModalOpen} className="modal" ariaHideApp={false}>
-        <h2>Login Required</h2>
-        <form>
-          {Array.from({ length: 5 }, (_, index) => (
-            <div key={index} className="login-field">
-              <label>Field {index + 1}:</label>
-              <input
-                type="text"
-                name={`field${index + 1}`}
-                value={loginFields[`field${index + 1}`]}
-                onChange={handleLoginChange}
-              />
-            </div>
-          ))}
-          <ActionButton onClick={validateLogin} title="Login" />
-        </form>
-      </Modal>
-    );
-  }
-
   return (
     <div className="home-page">
       <div className="title-bar">
         <img src={getImagePrefix('fixtures/nws_banner.png')} alt="Company Logo" className="logo" />
       </div>
+
+      <LoginForm 
+        isOpen={loginModalOpen} 
+        onClose={() => setLoginModalOpen(false)} 
+        loginFields={loginFields} 
+        handleLoginChange={handleLoginChange} 
+        validateLogin={validateLogin} 
+      />
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeCourseModal} className="modal">
         <ActionButton onClick={closeCourseModal} title="Close" small right />
