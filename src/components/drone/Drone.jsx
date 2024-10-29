@@ -32,7 +32,8 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     rotate,
     enableMouseControl,
     enableMeasurement,
-    droneScale
+    droneScale,
+    cameraOffset
   }, ref) => {
 
   const isGameMode = window.location.href.includes('game-mode');
@@ -92,9 +93,10 @@ export const Drone = React.forwardRef(({ moveDronePosY,
 
     // Update camera to follow drone
     if (!canMoveInArena && !enableMeasurement) {
-      const cameraOffset = new THREE.Vector3(0, 3, -10); // Camera position relative to the drone
-      cameraOffset.applyQuaternion(droneRef.current.quaternion); // Apply the drone's rotation to the camera
-      camera.position.copy(droneRef.current.position.clone().add(cameraOffset));
+      const [cameraOffsetX, cameraOffsetY, cameraOffsetZ] = cameraOffset;
+      const cameraView = new THREE.Vector3(cameraOffsetX, cameraOffsetY, cameraOffsetZ); // Camera position relative to the drone
+      cameraView.applyQuaternion(droneRef.current.quaternion); // Apply the drone's rotation to the camera
+      camera.position.copy(droneRef.current.position.clone().add(cameraView));
       camera.lookAt(droneRef.current.position); // Ensure the camera keeps looking at the drone
     }
 
@@ -214,5 +216,6 @@ Drone.propTypes = {
   rotate: PropTypes.any,
   buildings: PropTypes.any,
   enableMeasurement: PropTypes.any,
-  droneScale: PropTypes.any
+  droneScale: PropTypes.any,
+  cameraOffset: PropTypes.any
 };

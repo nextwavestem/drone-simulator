@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */ 
 import PropTypes from 'prop-types';
-import City from '../../environments/city/City.jsx' 
+import City from '../../environments/City.jsx' 
 
 function CitySimulator({
     moveDronePosY,
