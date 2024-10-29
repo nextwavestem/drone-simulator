@@ -67,8 +67,15 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <div className="title-bar">
-        <img src={getImagePrefix('fixtures/nws_banner.png')} alt="Company Logo" className="logo" />
+      <div className="header-container">
+        <div className="logo-container">
+          <img src={getImagePrefix('fixtures/nws_banner.png')} alt="Company Logo" className="logo" />
+        </div>
+        <div className="description-container">
+          <h1>Welcome to the world of Drone Simulator!</h1>
+          <p>At NextWaveStem, we empower young innovators to explore the exciting world of drone programming through our interactive simulator. Designed specifically for kids, our platform utilizes Blockly, a visual programming language, to make coding intuitive and fun. Before taking their skills to the skies, users can refine and test their commands in a safe, virtual environment. </p>
+          <p>With the DroneBlocks Simulator, you can develop essential programming skills, enhance problem-solving abilities, and build confidence in coding. Whether you want to navigate through challenging tasks or experiment with flight maneuvers, our simulator provides a unique blend of play and education, making learning about drones an engaging adventure!</p>
+        </div>
       </div>
 
       <LoginForm 
@@ -103,3 +110,7 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// At DroneBlocks, we empower young innovators to explore the exciting world of drone programming through our interactive simulator. Designed specifically for kids, our platform utilizes Blockly, a visual programming language, to make coding intuitive and fun. Before taking their skills to the skies, users can refine and test their commands in a safe, virtual environment.
+
+// With the DroneBlocks Simulator, children can develop essential programming skills, enhance their problem-solving abilities, and build confidence in their coding. Whether they're navigating through challenging tasks or experimenting with flight maneuvers, our simulator provides a unique blend of play and education, making learning about drones an engaging adventure!
