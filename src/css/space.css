@@ -1,0 +1,26 @@
+* {
+    /* padding: 0;
+    margin: 0; */
+    /* height: 100%;
+    width:100%; */
+}
+
+/* html,
+body,
+#root {
+    height: 100%;
+    width:100%;
+    margin:0;
+    padding: 0;
+} */
+
+
+
+.spaceGameWrapper {
+    /* Styles for the SpaceGameMode component */
+  }
+  
+  .canvas {
+    /* Styles for the Canvas component */
+  }
+  
