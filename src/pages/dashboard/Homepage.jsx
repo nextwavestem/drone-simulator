@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'; // Import js-cookie for session management
 import ActionButton from '../../components/ActionButton.jsx';
 import { getImagePrefix, projects } from './config.js';
 import './HomePage.css';
-import { validCredentials } from '../../config/validCredentials.js'
+import { validCredentials } from '../../config/validCredentials.js';
 import LoginForm from './LoginForm.jsx'; // Import the new LoginForm component
 
 const HomePage = () => {
