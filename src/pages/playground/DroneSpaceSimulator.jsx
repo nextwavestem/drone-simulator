@@ -3,6 +3,7 @@ import SpaceSimulator from "./simulator/SpaceSimulator.jsx";
 import BlockPad from '../../components/blockly/BlockPad.jsx';
 import "../../css/droneSpaceSimulator.css";
 import { useState } from "react";
+import ActionButton from "../../components/ActionButton.jsx"
 
 
 const DroneSpaceSimulator = () => {
@@ -16,7 +17,7 @@ const DroneSpaceSimulator = () => {
   const [waitTime, setWaitTime] = useState(null);
   const [rotate, setRotate] = useState(null); 
   const [enableMouseControl, setEnableMouseControl] = useState(null); 
-
+  const [enableMeasurement, setEnableMeasurement] = useState(false); 
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0, z: 0 });
 
   const moveDronePositiveY = (value) => {
@@ -69,6 +70,10 @@ const DroneSpaceSimulator = () => {
     setTimeout(() => setWaitTime(null), 1000);
   };
 
+  const measurementControl = () => {
+    setEnableMeasurement(!enableMeasurement);
+  }
+
   const roundNumber = (number) => {
     return parseInt(number)
   }
@@ -92,12 +97,19 @@ const DroneSpaceSimulator = () => {
             </div>
             
             <div className="canvas-container">
-              <div className="toolbar">
-                <div className="position">
-                  <span className="coordinate">X: {roundNumber(dronePosition.xPos)} cm </span>
-                  <span className="coordinate">Z: {roundNumber(dronePosition.zPos)} cm </span>
-                  <span className="coordinate">Altitude: {roundNumber(dronePosition.yPos)} cm </span>
-                  <span className="rotation">Yaw: {roundNumber(dronePosition.yRot) * 60}°</span>
+            <div className="toolbar">
+                <div className="row">
+                  <div className="column">
+                    <span className="coordinate">X: {roundNumber(dronePosition.xPos)} cm </span>
+                    <span className="coordinate">Z: {roundNumber(dronePosition.zPos)} cm </span>
+                  </div>
+                  <div className="column">
+                    <span className="coordinate">Altitude: {roundNumber(dronePosition.yPos)} cm </span>
+                    <span className="rotation">Yaw: {roundNumber(dronePosition.yRot) * 60}°</span>
+                  </div>
+                  <div className="column">
+                    <ActionButton onClick={measurementControl} title="Measurement" green medium/>
+                  </div>
                 </div>
               </div>
               <SpaceSimulator 
@@ -112,6 +124,7 @@ const DroneSpaceSimulator = () => {
                 speed={speed}
                 waitTime={waitTime}
                 setDronePosition={setDronePosition}
+                enableMeasurement={enableMeasurement}
               />
             </div>
           </div>

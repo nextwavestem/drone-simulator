@@ -3,7 +3,7 @@ import CitySimulator from "./simulator/CitySimulator.jsx";
 import BlockPad from '../../components/blockly/BlockPad.jsx';
 import "../../css/droneCitySimulator.css";
 import { useState } from "react";
-import ActionButton from "../../components/ActionButton.jsx"
+import {Toolbar} from '../playground/simulator/Toolbar.jsx'; // 
 
 const DroneCitySimulator = () => {
   const [moveDronePosY, setDronePosY] = useState(null);
@@ -96,21 +96,10 @@ const DroneCitySimulator = () => {
             </div>
             
             <div className="canvas-container">
-              <div className="toolbar">
-                <div className="row">
-                  <div className="column">
-                    <span className="coordinate">X: {roundNumber(dronePosition.xPos)} cm </span>
-                    <span className="coordinate">Z: {roundNumber(dronePosition.zPos)} cm </span>
-                  </div>
-                  <div className="column">
-                    <span className="coordinate">Altitude: {roundNumber(dronePosition.yPos)} cm </span>
-                    <span className="rotation">Yaw: {roundNumber(dronePosition.yRot) * 60}°</span>
-                  </div>
-                  <div className="column">
-                    <ActionButton onClick={measurementControl} title="Measurement" green medium/>
-                  </div>
-                </div>
-              </div>
+              <Toolbar 
+                dronePosition={dronePosition}
+                measurementControl={measurementControl} 
+              />
               <CitySimulator 
                 enableMouseControl={enableMouseControl}
                 moveDronePosY={moveDronePosY}

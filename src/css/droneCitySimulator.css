@@ -20,18 +20,11 @@
   width: 50%; /* BlockPad takes half the space */
 }
 
-.toolbar {
-  display: flex;
-  flex-direction: column; /* Stack the rows vertically */
-  align-items: stretch;   /* Stretch the columns to fill the toolbar */
-}
-
 .row {
   display: flex;          /* Use flexbox to create columns */
   justify-content: space-between; /* Space between columns */
-  margin-bottom: 10px;   /* Space between rows */
   font-family: monospace !important;
-  margin-top: 20px;
+  margin-top: 8px;
 
 }
 
@@ -51,7 +44,6 @@ button {
   padding: 10px 15px;   /* Add some padding to the button */
   cursor: pointer;       /* Change cursor on hover */
 }
-
 
 .canvas-container {
   width: 50%; /* Canvas takes half the space */
@@ -105,7 +97,16 @@ html, body {
 }
 
 .toolbar {
-  height: 55px;
+  background: white;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-top: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column; /* Stack the rows vertically */
+    align-items: stretch;   /* Stretch the columns to fill the toolbar */
 
   .position {
     padding: 10px;
