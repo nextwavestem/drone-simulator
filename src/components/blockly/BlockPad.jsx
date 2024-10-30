@@ -144,6 +144,7 @@ BlockPad.propTypes = {
   moveDroneNegZ: PropTypes.any,
   moveDronePosX: PropTypes.any, 
   moveDroneNegX: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   rotate: PropTypes.any
