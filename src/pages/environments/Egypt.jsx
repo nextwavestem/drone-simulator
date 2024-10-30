@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment,useGLTF } from '@react-three/drei';
 import React, { useRef, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
@@ -130,9 +130,16 @@ const displayDistanceText = (text, position) => {
 
 const Model = () => {
   const { scene } = useGLTF('assets/models/egypt/environment.glb'); 
-  const modelPosition = [0, -15, 0]; 
-  return <primitive object={scene} position={modelPosition} scale={50}/>;
+  const modelPosition = [0, -10, 10];
+
+  // Set the desired rotation (in radians)
+  const rotation = [0, Math.PI / 4, 0]; // Example: Rotate 45 degrees around the Y-axis
+
+  // Apply rotation directly to the scene
+  scene.rotation.set(rotation[0], rotation[1], rotation[2]);
+  return <primitive object={scene} position={modelPosition} scale={50} />;
 };
+
 
 const Egypt = ({
   moveDronePosY,
@@ -179,8 +186,8 @@ const Egypt = ({
         speed={speed}
         setDronePosition={setDronePosition}
         rotate={rotate}
-        droneScale={0.05}
-        cameraOffset={[1,1,-4]}
+        droneScale={0.5}
+        cameraOffset={[9,6,-3]}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
         lineColor={"yellow"}

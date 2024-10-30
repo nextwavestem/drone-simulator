@@ -49,7 +49,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
   const { camera } = useThree(); 
 
   const [path, setPath] = useState([new THREE.Vector3(0, 0, 0)]); 
-  let droneSpeed = 0.05
+  let droneSpeed = 0.02
 
   useEffect(() => {
     const handleKeyDown = (event) => {

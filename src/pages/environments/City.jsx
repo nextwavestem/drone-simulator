@@ -132,8 +132,10 @@ const displayDistanceText = (text, position) => {
 const CityModel = () => {
   // const { scene } = useGLTF('assets/models/egypt/environment.glb'); // Load the GLB model
   const { scene } = useGLTF('assets/models/city/city/city.glb'); // Load the GLB model
-  const modelPosition = [-10, 0, -1]; // Set your desired position (x, y, z)
-  return <primitive object={scene} position={modelPosition} />;
+  const modelPosition = [0, -10, 3]; // Set your desired position (x, y, z)
+  const rotation = [0, -Math.PI / 4, 0];
+  scene.rotation.set(rotation[0], rotation[1], rotation[2]);
+  return <primitive object={scene} position={modelPosition} scale={2}/>;
 };
 
 const City = ({
@@ -181,8 +183,8 @@ const City = ({
         speed={speed}
         setDronePosition={setDronePosition}
         rotate={rotate}
-        droneScale={0.1}
-        cameraOffset={[0, 6, -10]}
+        droneScale={0.2}
+        cameraOffset={[1, 8, -10]}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
         lineColor={"yellow"}
