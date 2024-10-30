@@ -9,6 +9,7 @@ function SlateSimulator({
     moveDroneNegZ,
     moveDronePosX,
     moveDroneNegX,
+    moveDroneTo,
     waitTime,
     speed,
     setDronePosition,
@@ -25,6 +26,7 @@ function SlateSimulator({
         moveDroneNegZ={moveDroneNegZ}
         moveDronePosX={moveDronePosX}
         moveDroneNegX={moveDroneNegX}
+        moveDroneTo={moveDroneTo}
         waitTime={waitTime}
         speed={speed}
         setDronePosition={setDronePosition}
@@ -45,6 +47,7 @@ SlateSimulator.propTypes = {
   moveDroneNegZ: PropTypes.any,
   moveDronePosX: PropTypes.any, 
   moveDroneNegX: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   rotate: PropTypes.any,

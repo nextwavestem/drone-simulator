@@ -7,11 +7,11 @@ export const Toolbar = ({ dronePosition, measurementControl }) => {
     <div className="toolbar">
       <div className="row">
         <div className="column">
-          <span className="coordinate">X: {Math.round(dronePosition.xPos)} cm </span>
-          <span className="coordinate">Z: {Math.round(dronePosition.zPos)} cm </span>
+          <span className="coordinate">X: {Math.ceil(dronePosition.xPos)} cm </span>
+          <span className="coordinate">Z: {Math.ceil(dronePosition.zPos)} cm </span>
         </div>
         <div className="column">
-          <span className="coordinate">Altitude: {Math.round(dronePosition.yPos)} cm </span>
+          <span className="coordinate">Altitude: {Math.ceil(dronePosition.yPos)} cm </span>
           <span className="rotation">Yaw: {Math.round(dronePosition.yRot) * 60}°</span>
         </div>
         <div className="column">

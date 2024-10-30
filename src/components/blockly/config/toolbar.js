@@ -770,11 +770,11 @@ export const toolbarBlocksDefinitions = (Blockly) => {
     init: function() {
       this.appendDummyInput()
           .appendField("fly x")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "x")
+          .appendField(new Blockly.FieldNumber(0, -Infinity, null), "x")
           .appendField("y")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "y")
+          .appendField(new Blockly.FieldNumber(0, -Infinity, null), "y")
           .appendField("z")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "z")
+          .appendField(new Blockly.FieldNumber(0, -Infinity, null), "z")
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);

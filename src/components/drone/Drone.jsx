@@ -26,6 +26,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     moveDroneNegZ,
     moveDronePosX,
     moveDroneNegX,
+    moveDroneTo,
     waitTime,
     speed,
     setDronePosition,
@@ -164,6 +165,16 @@ export const Drone = React.forwardRef(({ moveDronePosY,
   const moveNegY = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, -1, 0), params[0]) : moveDrone(new THREE.Vector3(0, -1, 0), params);
   const movePosZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, 1),  params[0]) : moveDrone(new THREE.Vector3(0, 0, 1),  params);
   const moveNegZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, -1), params[0]) : moveDrone(new THREE.Vector3(0, 0, -1), params);
+  const moveDroneToPosition = (position) => {
+    const targetPosition = new THREE.Vector3(position[0], position[1], position[2]);
+    const currentPosition = droneRef.current.position.clone();
+    const direction = targetPosition.clone().sub(currentPosition).normalize();
+    const distance = currentPosition.distanceTo(targetPosition);
+    const speed = 0.1; 
+    const moveDistance = Math.min(distance, speed);
+    droneRef.current.position.add(direction.multiplyScalar(moveDistance));
+  };
+
   
   useFrame(() => {
     if (!droneRef.current) return;
@@ -175,6 +186,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     if (moveDroneNegZ) moveNegZ(moveDroneNegZ);
     if (moveDronePosX) movePosX(moveDronePosX);
     if (moveDroneNegX) moveNegX(moveDroneNegX);
+    if (moveDroneTo) moveDroneToPosition(moveDroneTo);
     if (rotate) rotateDrone(rotate);
     if (waitTime) createWait(waitTime);
     if (speed) droneSpeed = speed;
@@ -210,6 +222,7 @@ Drone.propTypes = {
   moveDroneNegZ: PropTypes.any,
   moveDronePosX: PropTypes.any, 
   moveDroneNegX: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   controlsRef: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,

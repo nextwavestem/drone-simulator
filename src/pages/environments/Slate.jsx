@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import '../../../src/css/egypt.css';
 import { Drone } from '../../components/drone/Drone.jsx';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
+const loader = new FontLoader(); // Create a FontLoader instance;
 let GlobalCamera;
 let GlobalScene;
 let lastPosition = null;
@@ -18,8 +21,8 @@ const CameraController = ({ enableMeasurement }) => {
   useEffect(() => {
     if (enableMeasurement) {
       // Move camera to top-down view
-      camera.position.set(5, 25, 0); // should be (0, 100, 0)
-      camera.lookAt(new THREE.Vector3(0, 0, 0));
+      camera.position.set(0, 10, 0); // should be (0, 100, 0)
+      camera.lookAt(new THREE.Vector3(0, 5, 0));
       camera.updateProjectionMatrix();
 
       if (controlsRef.current) {
@@ -55,7 +58,7 @@ const CameraController = ({ enableMeasurement }) => {
 const Pin = ({ position }) => {
   return (
     <mesh position={position}>
-      <sphereGeometry args={[0.5, 16, 16]} />
+      <sphereGeometry args={[0.1, 4, 4]} />
       <meshStandardMaterial color="yellow" />
     </mesh>
   );
@@ -71,8 +74,8 @@ const handleCanvasClick = (event, setPins, enableMeasurement, droneRef) => {
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(vector, GlobalCamera);
 
-    // Intersect the city model instead of all buildings
-    const intersections = raycaster.intersectObject(GlobalScene, true); // true for recursive
+    // Intersect the scene
+    const intersections = raycaster.intersectObject(GlobalScene, true);
 
     if (intersections.length > 0) {
       const point = intersections[0].point; // Get the intersection point
@@ -81,38 +84,33 @@ const handleCanvasClick = (event, setPins, enableMeasurement, droneRef) => {
       if (lastPosition == null) {
         lastPosition = droneRef.current.position.clone(); // Clone to avoid reference issues
       }
-      const distance = lastPosition.distanceTo(point);
 
-      // Draw a line from the drone to the intersection point
+      // Prepare the coordinates text
       const points = [lastPosition, point];
       const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
       const lineMaterial = new THREE.LineBasicMaterial({ color: 'red' });
       const line = new THREE.Line(lineGeometry, lineMaterial);
       GlobalScene.add(line);
-      lastPosition.copy(point); // Update lastPosition to the current intersection point
-
-      // Display the distance near the point
-      displayDistanceText(`${distance.toFixed(2)} cm`, point);
+      lastPosition.copy(point);
+      const coordinatesText = `X: ${point.x.toFixed(2)}, Y: ${point.y.toFixed(2)}, Z: ${point.z.toFixed(2)}`;
+      
+      // Display the coordinates at the intersection point
+      displayCoordinatesText(coordinatesText, point);
     }
   }
 };
 
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-
-const loader = new FontLoader(); // Create a FontLoader instance
-
-const displayDistanceText = (text, position) => {
+const displayCoordinatesText = (text, position) => {
   loader.load('/node_modules/three/examples/fonts/helvetiker_regular.typeface.json', (font) => {
     const textGeometry = new TextGeometry(text, {
       font: font,
-      size: 0.5, // Adjust size as needed
-      height: 0.09, // Adjust height
+      size: 0.1, // Adjust size as needed
+      height: 0.01, // Adjust height
       curveSegments: 1,
       bevelEnabled: false,
       bevelThickness: 0.0,
-      bevelSize: 0.03,
-      bevelSegments: 2,
+      bevelSize: 0.02,
+      bevelSegments: 1,
     });
 
     const textMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
@@ -126,6 +124,37 @@ const displayDistanceText = (text, position) => {
   });
 };
 
+const Plane = () => {
+  const planeRef = useRef();
+  
+  // Define the size of the plane
+  const planeSize = 11;
+
+  return (
+    <>
+      <mesh ref={planeRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
+        <planeGeometry args={[planeSize, planeSize]} /> {/* Size of the plane */}
+        <meshStandardMaterial color="lightpink" />
+      </mesh>
+      
+      {/* Landing pads at the corners of the plane */}
+      <LandingPad position={[-planeSize / 2, 0, -planeSize / 2]} /> {/* Bottom Left */}
+      <LandingPad position={[planeSize / 2, 0.05, -planeSize / 2]} />  {/* Bottom Right */}
+      <LandingPad position={[-planeSize / 2, 0.05, planeSize / 2]} />  {/* Top Left */}
+      <LandingPad position={[planeSize / 2, 0.05, planeSize / 2]} />   {/* Top Right */}
+    </>
+  );
+};
+
+
+const LandingPad = ({ position }) => {
+  return (
+    <mesh position={position}>
+      <boxGeometry args={[1, 0.1, 1]} /> {/* Width, Height, Depth */}
+      <meshStandardMaterial color="black" />
+    </mesh>
+  );
+};
 
 const Slate = ({
   moveDronePosY,
@@ -134,6 +163,7 @@ const Slate = ({
   moveDroneNegZ,
   moveDronePosX,
   moveDroneNegX,
+  moveDroneTo,
   waitTime,
   speed,
   setDronePosition,
@@ -148,10 +178,12 @@ const Slate = ({
   return (
   <Canvas 
     shadows 
+    style={{ background: 'gray' }}
     onClick={(event) => handleCanvasClick(event, setPins, enableMeasurement, droneRef)} // Pass click event
   >
-      <ambientLight intensity={0.4} color={new THREE.Color(0xffc1a0)} /> {/* Warm light color */}
+      <ambientLight intensity={0.4} color={new THREE.Color(0x000000)} /> {/* Warm light color */}
       <Environment preset="sunset" intensity={0.5} /> {/* Adjusted intensity */}
+      <Plane />
 
       {pins.map((pin, index) => ( <Pin key={index} position={pin} /> ))}
       <CameraController enableMeasurement={enableMeasurement} />
@@ -165,6 +197,7 @@ const Slate = ({
         moveDroneNegZ={moveDroneNegZ}
         moveDronePosX={moveDronePosX}
         moveDroneNegX={moveDroneNegX}
+        moveDroneTo={moveDroneTo}
         waitTime={waitTime}
         speed={speed}
         setDronePosition={setDronePosition}
@@ -183,6 +216,7 @@ Slate.propTypes = {
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any,
   moveDroneNegZ: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   moveDronePosX: PropTypes.any,
   moveDroneNegX: PropTypes.any,
   waitTime: PropTypes.any,

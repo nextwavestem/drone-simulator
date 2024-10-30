@@ -13,6 +13,7 @@ const DroneSlateSimulator = () => {
   const [moveDroneNegZ, setDroneNegZ] = useState(null);
   const [moveDronePosX, setDronePosX] = useState(null);
   const [moveDroneNegX, setDroneNegX] = useState(null);
+  const [moveDroneTo, setDroneTo] = useState(null);
   const [speed, setSpeed] = useState(null);
   const [waitTime, setWaitTime] = useState(null);
   const [rotate, setRotate] = useState(null); 
@@ -74,6 +75,11 @@ const DroneSlateSimulator = () => {
     setEnableMeasurement(!enableMeasurement);
   }
 
+  const moveDroneToPos = (value) => {
+    setDroneTo(value);
+    setTimeout(() => setDroneTo(null), 1000);
+  }
+
   const roundNumber = (number) => {
     return parseInt(number)
   }
@@ -89,6 +95,7 @@ const DroneSlateSimulator = () => {
                 moveDroneNegZ={moveDroneNegativeZ}
                 moveDronePosX={moveDronePositiveX}
                 moveDroneNegX={moveDroneNegativeX}
+                moveDroneTo={moveDroneToPos}
                 waitTime={bufferTime}
                 rotate={rotateDrone}
                 speed={droneSpeed}
@@ -120,6 +127,7 @@ const DroneSlateSimulator = () => {
                 moveDroneNegZ={moveDroneNegZ}
                 moveDronePosX={moveDronePosX}
                 moveDroneNegX={moveDroneNegX}
+                moveDroneTo={moveDroneTo}
                 rotate={rotate}
                 speed={speed}
                 waitTime={waitTime}

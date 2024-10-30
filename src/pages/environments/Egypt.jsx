@@ -141,6 +141,7 @@ const Egypt = ({
   moveDroneNegZ,
   moveDronePosX,
   moveDroneNegX,
+  moveDroneTo,
   waitTime,
   speed,
   setDronePosition,
@@ -173,6 +174,7 @@ const Egypt = ({
         moveDroneNegZ={moveDroneNegZ}
         moveDronePosX={moveDronePosX}
         moveDroneNegX={moveDroneNegX}
+        moveDroneTo={moveDroneTo}
         waitTime={waitTime}
         speed={speed}
         setDronePosition={setDronePosition}
@@ -193,6 +195,7 @@ Egypt.propTypes = {
   moveDroneNegZ: PropTypes.any,
   moveDronePosX: PropTypes.any,
   moveDroneNegX: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   waitTime: PropTypes.any,
   speed: PropTypes.any,
   setDronePosition: PropTypes.any,

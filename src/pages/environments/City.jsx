@@ -141,6 +141,7 @@ const City = ({
   moveDroneNegY,
   moveDronePosZ,
   moveDroneNegZ,
+  moveDroneTo,
   moveDronePosX,
   moveDroneNegX,
   waitTime,
@@ -173,6 +174,7 @@ const City = ({
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}
         moveDroneNegZ={moveDroneNegZ}
+        moveDroneTo={moveDroneTo}
         moveDronePosX={moveDronePosX}
         moveDroneNegX={moveDroneNegX}
         waitTime={waitTime}
@@ -196,6 +198,7 @@ City.propTypes = {
   moveDroneNegZ: PropTypes.any,
   moveDronePosX: PropTypes.any,
   moveDroneNegX: PropTypes.any,
+  moveDroneTo: PropTypes.any,
   waitTime: PropTypes.any,
   speed: PropTypes.any,
   setDronePosition: PropTypes.any,

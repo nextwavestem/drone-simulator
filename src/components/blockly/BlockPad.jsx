@@ -26,6 +26,7 @@ const BlockPad = ({
   moveDroneNegZ,
   moveDronePosX,
   moveDroneNegX,
+  moveDroneTo,
   rotate,
   waitTime,
   speed,
@@ -44,13 +45,12 @@ const initInterpreter = (interpreter, globalObject) => {
   interpreter.setProperty(globalObject, 'flyBackward',  interpreter.createNativeFunction(wrapFunction(flyBackward)));
   interpreter.setProperty(globalObject, 'flyDown', interpreter.createNativeFunction(wrapFunction(flyDown)));
   interpreter.setProperty(globalObject, 'flyUp',   interpreter.createNativeFunction(wrapFunction(flyUp)));
-  interpreter.setProperty(globalObject, 'flyBackward',  interpreter.createNativeFunction(wrapFunction(flyBackward)));
   interpreter.setProperty(globalObject, 'flyLeft',   interpreter.createNativeFunction(wrapFunction(flyLeft)));
   interpreter.setProperty(globalObject, 'flyRight',  interpreter.createNativeFunction(wrapFunction(flyRight)));
   interpreter.setProperty(globalObject, 'setSpeed',   interpreter.createNativeFunction(wrapFunction(setSpeed)));
   interpreter.setProperty(globalObject, 'setWaitTime',  interpreter.createNativeFunction(wrapFunction(setWaitTime)));
   interpreter.setProperty(globalObject, 'rotateDrone',  interpreter.createNativeFunction(wrapFunction(rotateDrone)));
-
+  interpreter.setProperty(globalObject, 'moveTo',  interpreter.createNativeFunction(wrapFunction(moveTo)));
 };
 
   const [toggleValue, setToggleValue] = useState(false);
@@ -67,6 +67,8 @@ const initInterpreter = (interpreter, globalObject) => {
   
   const flyLeft  = (distance, measurement) => { moveDroneNegX([distance, measurement]); }
   const flyRight = (distance, measurement) => { moveDronePosX([distance, measurement]); }
+
+  const moveTo = (x, y, z) => { moveDroneTo([x, y, z]); }
 
   const setSpeed    = (value) => { speed(value) }
   const setWaitTime = (value) => { waitTime(value) }
