@@ -77,7 +77,7 @@ const DroneSlateSimulator = () => {
 
   const moveDroneToPos = (value) => {
     setDroneTo(value);
-    setTimeout(() => setDroneTo(null), 1000);
+    setTimeout(() => setDroneTo(null), 5000);
   }
 
   const roundNumber = (number) => {

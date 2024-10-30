@@ -185,6 +185,7 @@ const City = ({
         cameraOffset={[0, 6, -10]}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
+        lineColor={"yellow"}
       />
   
   </Canvas>

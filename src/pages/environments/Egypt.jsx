@@ -183,6 +183,7 @@ const Egypt = ({
         cameraOffset={[1,1,-4]}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
+        lineColor={"yellow"}
       />
   </Canvas>
   );

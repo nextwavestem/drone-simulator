@@ -13,6 +13,12 @@ const loader = new FontLoader(); // Create a FontLoader instance;
 let GlobalCamera;
 let GlobalScene;
 let lastPosition = null;
+let measurementLineColor = "white";
+let measurementPinColor = "black";
+let dronePathColor = "yellow"
+let launchPadColor = "white"
+let planeColor="lightgreen"
+let measurementTextColor="black"
 
 const CameraController = ({ enableMeasurement }) => {
   const { camera, gl, scene } = useThree();
@@ -59,7 +65,7 @@ const Pin = ({ position }) => {
   return (
     <mesh position={position}>
       <sphereGeometry args={[0.1, 4, 4]} />
-      <meshStandardMaterial color="yellow" />
+      <meshStandardMaterial color={measurementPinColor} />
     </mesh>
   );
 };
@@ -88,7 +94,7 @@ const handleCanvasClick = (event, setPins, enableMeasurement, droneRef) => {
       // Prepare the coordinates text
       const points = [lastPosition, point];
       const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-      const lineMaterial = new THREE.LineBasicMaterial({ color: 'red' });
+      const lineMaterial = new THREE.LineBasicMaterial({ color: measurementLineColor });
       const line = new THREE.Line(lineGeometry, lineMaterial);
       GlobalScene.add(line);
       lastPosition.copy(point);
@@ -113,7 +119,7 @@ const displayCoordinatesText = (text, position) => {
       bevelSegments: 1,
     });
 
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
+    const textMaterial = new THREE.MeshBasicMaterial({ color: measurementTextColor });
     const textMesh = new THREE.Mesh(textGeometry, textMaterial);
     textMesh.position.set(position.x, position.y + 0.4, position.z); // Adjust Y position slightly above the line point
     textMesh.rotation.x = -Math.PI / 2; // Rotate 90 degrees around the X-axis
@@ -124,24 +130,27 @@ const displayCoordinatesText = (text, position) => {
   });
 };
 
+
+
 const Plane = () => {
   const planeRef = useRef();
-  
+
   // Define the size of the plane
   const planeSize = 11;
 
   return (
     <>
-      <mesh ref={planeRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
-        <planeGeometry args={[planeSize, planeSize]} /> {/* Size of the plane */}
-        <meshStandardMaterial color="lightpink" />
-      </mesh>
-      
-      {/* Landing pads at the corners of the plane */}
-      <LandingPad position={[-planeSize / 2, 0, -planeSize / 2]} /> {/* Bottom Left */}
-      <LandingPad position={[planeSize / 2, 0.05, -planeSize / 2]} />  {/* Bottom Right */}
-      <LandingPad position={[-planeSize / 2, 0.05, planeSize / 2]} />  {/* Top Left */}
-      <LandingPad position={[planeSize / 2, 0.05, planeSize / 2]} />   {/* Top Right */}
+    <mesh ref={planeRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
+      <planeGeometry args={[planeSize, planeSize]} />
+      {/* Blackboard effect: dark color and roughness for a matte finish */}
+      <meshStandardMaterial color={planeColor} roughness={0.9} />
+    </mesh>
+
+    {/* Landing pads at the corners of the plane */}
+    <LandingPad position={[-planeSize / 2, -2, -planeSize / 2]} /> {/* Bottom Left */}
+    <LandingPad position={[planeSize / 2,  -2, -planeSize / 2]} />  {/* Bottom Right */}
+    <LandingPad position={[-planeSize / 2, -2, planeSize / 2]} />  {/* Top Left */}
+    <LandingPad position={[planeSize / 2,  -2, planeSize / 2]} />   {/* Top Right */}
     </>
   );
 };
@@ -151,7 +160,7 @@ const LandingPad = ({ position }) => {
   return (
     <mesh position={position}>
       <boxGeometry args={[1, 0.1, 1]} /> {/* Width, Height, Depth */}
-      <meshStandardMaterial color="black" />
+      <meshStandardMaterial color={launchPadColor} />
     </mesh>
   );
 };
@@ -179,8 +188,7 @@ const Slate = ({
   <Canvas 
     shadows 
     style={{ background: 'gray' }}
-    onClick={(event) => handleCanvasClick(event, setPins, enableMeasurement, droneRef)} // Pass click event
-  >
+    onClick={(event) => handleCanvasClick(event, setPins, enableMeasurement, droneRef)}>
       <ambientLight intensity={0.4} color={new THREE.Color(0x000000)} /> {/* Warm light color */}
       <Environment preset="sunset" intensity={0.5} /> {/* Adjusted intensity */}
       <Plane />
@@ -202,10 +210,11 @@ const Slate = ({
         speed={speed}
         setDronePosition={setDronePosition}
         rotate={rotate}
-        droneScale={0.05}
+        droneScale={0.1}
         cameraOffset={[1,1,-4]}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
+        lineColor={dronePathColor}
       />
   </Canvas>
   );

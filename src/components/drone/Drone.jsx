@@ -34,7 +34,8 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     enableMouseControl,
     enableMeasurement,
     droneScale,
-    cameraOffset
+    cameraOffset,
+    lineColor
   }, ref) => {
 
   const isGameMode = window.location.href.includes('game-mode');
@@ -170,7 +171,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     const currentPosition = droneRef.current.position.clone();
     const direction = targetPosition.clone().sub(currentPosition).normalize();
     const distance = currentPosition.distanceTo(targetPosition);
-    const speed = 0.1; 
+    const speed = 0.05; 
     const moveDistance = Math.min(distance, speed);
     droneRef.current.position.add(direction.multiplyScalar(moveDistance));
   };
@@ -206,7 +207,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
       </mesh>
       <Line
         points={path} 
-        color="yellow" 
+        color={lineColor} 
         lineWidth={3} 
       />
     </>
@@ -230,5 +231,6 @@ Drone.propTypes = {
   buildings: PropTypes.any,
   enableMeasurement: PropTypes.any,
   droneScale: PropTypes.any,
-  cameraOffset: PropTypes.any
+  cameraOffset: PropTypes.any,
+  lineColor: PropTypes.any
 };

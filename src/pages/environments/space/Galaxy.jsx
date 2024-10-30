@@ -58,6 +58,7 @@ const Galaxy = ({
               enableMouseControl={enableMouseControl}
               droneScale={0.2}
               cameraOffset={[0, 6, -10]}
+              lineColor={"yellow"}
             />
         </>
     );
